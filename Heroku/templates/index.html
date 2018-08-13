@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Parameters</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div>
+        <label>Full area:</label>
+        <input type="number" id="full_sq" align="right" value="45.0" min="1">
+        <label>Life area:</label>
+        <input type="number" id="life_sq" align="right" value="45.0" min="1">
+        <label>Timestamp:</label>
+        <input type="date" id="timestamp" align="right" value="1950-11-14" min="1930-01-01" max="2017-12-31">
+    </div>
+<div>
+    <label>Floor:</label>
+    <input type="number" id="floor" align="right" value="1" min="1" step="1">
+    <label>Max floor:</label>
+    <input type="number" id="max_floor" align="right" value="1" min="1" step="1">
+    <label>Number of rooms:</label>
+    <input type="number" id="num_room" align="right" value="1" min="1" step="1">
+    <label>Build year:</label>
+    <input type="number" id="build_year" align="right" value="1930" min="1930" step="1">
+</div>
+    <label>Select Sub Area:</label>
+    <select id="sub_area">
+        {% for area in areas %}
+            <option value="{{area}}">{{area}}</option>
+        {% endfor %}
+    </select>
+    <label>Select product type:</label>
+    <select id="product_type">
+        {% for type in types %}
+            <option value="{{type}}">{{type}}</option>
+        {% endfor %}
+    </select>
+<div>
+    <button id="action">Submit</button>
+</div>
+    <div>
+        <label><h1>Result</h1></label>
+        <input type="number" value="0.0" title="Result" id="res" readonly>
+    </div>
+<script>
+    $("#action").click(() => {
+        let data = {};
+        data['full_sq'] = $("#full_sq").val();
+        data['timestamp'] = $("#timestamp").val();
+        data['life_sq'] = $("#life_sq").val();
+        data['floor'] = $("#floor").val();
+        data['max_floor'] = $("#max_floor").val();
+        data['num_room'] = $("#num_room").val();
+        data['build_year'] = $("#build_year").val();
+        data['sub_area'] = $("#sub_area").val();
+        data['product_type'] = $("#product_type").val();
+        console.log(data);
+        $.ajax({
+            data: data,
+            method: "POST",
+            url: "./",
+            success: (resp) => {$("#res").val(resp)}
+        })
+    })
+</script>
+</body>
+</html>
